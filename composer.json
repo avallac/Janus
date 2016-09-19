@@ -1,0 +1,12 @@
+{
+   "autoload": {
+        "psr-0": {
+            "": "src/classes/"
+        }
+    },
+    "require": {
+        "silex/silex": "^2.0",
+      "symfony/yaml": "^3.1",
+      "doctrine/dbal": "^2.5"
+    }
+}
