@@ -1,5 +1,0 @@
-db:
-    dbhost: localhost
-    dbname: janus
-    user: postgres
-    password: 123
