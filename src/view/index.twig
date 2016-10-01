@@ -30,6 +30,12 @@
         </form>
     </div>
 
+    <div class="jumbotron">
+        {% for server in status %}
+            {{ server.hostname }} - {{ server.date_part }}<br>
+        {% endfor %}
+    </div>
+
     <div class="footer">
         <p>&copy; Naoni 2016</p>
     </div>

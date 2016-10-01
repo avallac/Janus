@@ -51,7 +51,9 @@ $app->match('/', function (\Symfony\Component\HttpFoundation\Request $r) use ($a
             throw $e;
         }
     }
-    return $app['twig']->render('index.twig');
+    $sql = 'SELECT id, extract(epoch FROM now() - lastused), hostname, port FROM proxy LEFT JOIN status ON id = proxy_id ';
+    $status = $app['db']->fetchAll($sql);
+    return $app['twig']->render('index.twig', ['status' => $status]);
 });
 
 return $app;
