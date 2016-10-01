@@ -11,6 +11,24 @@ class Chooser
         $this->app = $app;
     }
 
+    public function markBad($service, $auth)
+    {
+        $this->app['db']->beginTransaction();
+        try {
+            $this->app['db']->executeQuery('LOCK TABLE status IN ACCESS EXCLUSIVE MODE');
+            preg_match('/(\d+\.\d+\.\d+\.\d+)\:(\d+)/', $auth, $m);
+            $sql = 'SELECT id FROM proxy WHERE hostname = ? AND port = ?';
+            $status = $this->app['db']->fetchAll($sql, [$m[1], $m[2]]);
+            $this->app['db']->update('status', ['lastused' => "now() + INTERVAL '1 hour'",], [
+                'proxy_id' => $status[0]['id'],
+                'service' => $service
+            ]);
+        } catch (\Exception $e) {
+            $this->app['db']->rollBack();
+            throw $e;
+        }
+    }
+
     public function getProxy($service)
     {
         $return = null;

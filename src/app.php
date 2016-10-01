@@ -14,6 +14,12 @@ $app->get('/{service}', function ($service) use ($app) {
     return json_encode($chooser->getProxy($service));
 });
 
+$app->post('/{service}', function (\Symfony\Component\HttpFoundation\Request $r, $service) use ($app) {
+    $chooser = new \Janus\Model\Chooser($app);
+    $chooser->markBad($service, $r->get('auth'));
+    return '';
+});
+
 $app->match('/', function (\Symfony\Component\HttpFoundation\Request $r) use ($app) {
     $used = [];
     if($r->get('proxyList')) {
