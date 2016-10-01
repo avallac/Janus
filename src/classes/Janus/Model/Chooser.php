@@ -19,7 +19,7 @@ class Chooser
             preg_match('/(\d+\.\d+\.\d+\.\d+)\:(\d+)/', $auth, $m);
             $sql = 'SELECT id FROM proxy WHERE hostname = ? AND port = ?';
             $status = $this->app['db']->fetchAll($sql, [$m[1], $m[2]]);
-            $sql = "UPDATE status SET lastused =  now() + INTERVAL '1 hour' WHERE hostname = ? AND port = ?"
+            $sql = "UPDATE status SET lastused =  now() + INTERVAL '1 hour' WHERE hostname = ? AND port = ?";
             $this->app['db']->executeQuery($sql, [$status[0]['id'], 'service' => $service]);
         } catch (\Exception $e) {
             $this->app['db']->rollBack();
