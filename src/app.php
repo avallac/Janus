@@ -25,7 +25,7 @@ $app->match('/', function (\Symfony\Component\HttpFoundation\Request $r) use ($a
             $app['db']->executeQuery('delete from status');
             $app['db']->executeQuery('delete from proxy');
             foreach ($lines as $proxy) {
-                if (preg_match('/(\d+\.\d+\.\d+\.\d+)\s*:(\d+)\|(\S+):(\S+)/', $proxy, $m)) {
+                if (preg_match('/(\d+\.\d+\.\d+\.\d+)\s*:(\d+)[|@](\S+):(\S+)/', $proxy, $m)) {
                     if (!isset($used[$m[1].':'.$m[2]])) {
                         $app['db']->insert('proxy', [
                             'hostname' => $m[1],
