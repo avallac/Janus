@@ -49,8 +49,8 @@ $app->match('/', function (\Symfony\Component\HttpFoundation\Request $r) use ($a
             throw $e;
         }
     }
-    $sql = 'SELECT id, extract(epoch FROM now() - lastused), hostname, port FROM proxy LEFT JOIN status ON id = proxy_id  order by date_part desc';
-    $status = $app['db']->fetchAll($sql);
+    $sql = 'SELECT id, extract(epoch FROM now() - lastused), hostname, port FROM proxy LEFT JOIN status ON id = proxy_id and service = ? order by date_part desc';
+    $status = $app['db']->fetchAll($sql, ['avito']);
     $working = 0;
     foreach ($status as $e) {
         if ($e['date_part'] > 0) {
