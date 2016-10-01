@@ -20,7 +20,7 @@ class Chooser
             $sql = 'SELECT id FROM proxy WHERE hostname = ? AND port = ?';
             $status = $this->app['db']->fetchAll($sql, [$m[1], $m[2]]);
             $sql = "UPDATE status SET lastused = now() + INTERVAL '1 hour' WHERE proxy_id = ? AND service = ?";
-            $this->app['db']->executeQuery($sql, [$status[0]['id'], 'service' => $service]);
+            $this->app['db']->executeQuery($sql, [$status[0]['id'], $service]);
         } catch (\Exception $e) {
             $this->app['db']->rollBack();
             throw $e;
