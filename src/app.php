@@ -28,8 +28,6 @@ $app->match('/', function (\Symfony\Component\HttpFoundation\Request $r) use ($a
         try {
             $app['db']->executeQuery('LOCK TABLE status IN ACCESS EXCLUSIVE MODE');
             $app['db']->executeQuery('LOCK TABLE proxy IN ACCESS EXCLUSIVE MODE');
-            $app['db']->executeQuery('delete from status');
-            $app['db']->executeQuery('delete from proxy');
             foreach ($lines as $proxy) {
                 if (preg_match('/(\d+\.\d+\.\d+\.\d+)\s*:(\d+)[|@](\S+):(\S+)/', $proxy, $m)) {
                     if (!isset($used[$m[1].':'.$m[2]])) {
