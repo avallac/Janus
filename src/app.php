@@ -51,7 +51,13 @@ $app->match('/', function (\Symfony\Component\HttpFoundation\Request $r) use ($a
     }
     $sql = 'SELECT id, extract(epoch FROM now() - lastused), hostname, port FROM proxy LEFT JOIN status ON id = proxy_id  order by date_part desc';
     $status = $app['db']->fetchAll($sql);
-    return $app['twig']->render('index.twig', ['status' => $status]);
+    $working = 0;
+    foreach ($status as $e) {
+        if ($e['date_part'] > 0) {
+            $working++;
+        }
+    }
+    return $app['twig']->render('index.twig', ['status' => $status, 'w' => $working]);
 });
 
 return $app;
