@@ -16,9 +16,8 @@ $app->get('/{service}', function ($service) use ($app) {
 
 $app->post('/{service}', function (\Symfony\Component\HttpFoundation\Request $r, $service) use ($app) {
     $chooser = new \Janus\Model\Chooser($app);
-    var_dump($_POST);exit;
     $chooser->markBad($service, $r->get('auth'));
-    return '';
+    return $r->get('auth');
 });
 
 $app->match('/', function (\Symfony\Component\HttpFoundation\Request $r) use ($app) {
