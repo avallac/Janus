@@ -49,7 +49,7 @@ $app->match('/', function (\Symfony\Component\HttpFoundation\Request $r) use ($a
             throw $e;
         }
     }
-    $sql = 'SELECT id, extract(epoch FROM now() - lastused), hostname, port FROM proxy LEFT JOIN status ON id = proxy_id and service = ? order by date_part desc';
+    $sql = 'SELECT id, extract(epoch FROM now() - lastused), hostname, port, username FROM proxy LEFT JOIN status ON id = proxy_id and service = ? order by date_part desc';
     $service = $r->get('s');
     if (!isset($service)) {
         $service = 'avito';

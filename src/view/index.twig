@@ -33,7 +33,7 @@
     <div class="jumbotron">
         <h3>{{ w }}</h3>
         {% for server in status %}
-            {{ server.hostname }} - {{ server.date_part }}<br>
+            {{ server.hostname }} - {{ server.date_part }} [{{ server.username }}]<br>
         {% endfor %}
     </div>
 
