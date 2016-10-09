@@ -32,13 +32,13 @@ class Chooser
     {
         $return = null;
         $this->app['db']->beginTransaction();
+        $this->app['db']->executeQuery('LOCK TABLE status IN ACCESS EXCLUSIVE MODE');
         try {
             $wait = $this->app['db']->fetchColumn('SELECT wait FROM service WHERE name = ?', [$service]);
             $minWait = $wait;
             if ($wait === false) {
                 throw new \Exception("Can't find service.");
             }
-            $this->app['db']->executeQuery('LOCK TABLE status IN ACCESS EXCLUSIVE MODE');
             $sql = 'SELECT 
                         id, extract(epoch FROM now() - lastused), username, password, hostname, port
                     FROM proxy 
