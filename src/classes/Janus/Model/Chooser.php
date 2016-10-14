@@ -56,6 +56,7 @@ class Chooser
                         break;
                     }
                 } else {
+                    $minWait = -1;
                     $this->app['db']->insert('status', [
                         'proxy_id' => $item['id'],
                         'lastused' => 'now()',
