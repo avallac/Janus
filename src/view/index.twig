@@ -32,12 +32,12 @@
 
     <div class="jumbotron">
         <h3>{{ w }}</h3>
-        Доступные прокси:
+        Доступные прокси:<br>
         {% for server in status if server.date_part > 0 %}
             {{ server.hostname }} ({{ server.statistic|number_format(4, '.', ',') }}/{{ server.date_part }}) [{{ server.username }}]<br>
         {% endfor %}
 
-        Заблокированные прокси:
+        Заблокированные прокси:<br>
         {% for server in status if server.date_part < 0 %}
             {{ server.hostname }} ({{ server.statistic|number_format(4, '.', ',') }}/{{ server.date_part }}) [{{ server.username }}]<br>
         {% endfor %}
