@@ -32,8 +32,14 @@
 
     <div class="jumbotron">
         <h3>{{ w }}</h3>
-        {% for server in status %}
-            {{ server.hostname }} ({{ server.statistic|number_format(4, '.', ',') }}) [{{ server.username }}]<br>
+        Доступные прокси:
+        {% for server in status if date_part > 0 %}
+            {{ server.hostname }} ({{ server.statistic|number_format(4, '.', ',') }}/{{ server.date_part }}) [{{ server.username }}]<br>
+        {% endfor %}
+
+        Заблокированные прокси:
+        {% for server in status if date_part < 0 %}
+            {{ server.hostname }} ({{ server.statistic|number_format(4, '.', ',') }}/{{ server.date_part }}) [{{ server.username }}]<br>
         {% endfor %}
     </div>
 
