@@ -59,7 +59,7 @@ class Chooser
             $sql = 'SELECT 
                         id, extract(epoch FROM now() - lastused), username, password, hostname, port
                     FROM proxy 
-                    LEFT JOIN status ON id = proxy_id AND service = ? order by statistic';
+                    LEFT JOIN status ON id = proxy_id AND service = ? order by date_part desc';
             $status = $this->app['db']->fetchAll($sql, [$service]);
             foreach ($status as $item) {
                 if (isset($item['date_part'])) {
