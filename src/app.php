@@ -16,7 +16,11 @@ $app->get('/{service}', function ($service) use ($app) {
 
 $app->post('/{service}', function (\Symfony\Component\HttpFoundation\Request $r, $service) use ($app) {
     $chooser = new \Janus\Model\Chooser($app);
-    $chooser->markBad($service, $r->get('auth'));
+    if ($r->get('basService')) {
+        $chooser->markBad($service, $r->get('auth'));
+    } elseif ($r->get('statistic')) {
+        $chooser->updateStatistic($service, $r->get('auth'), $r->get('statistic'));
+    }
     return $r->get('auth');
 });
 
